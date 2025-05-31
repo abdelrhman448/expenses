@@ -20,8 +20,7 @@ jobs:
           distribution: 'temurin' # Uses the Temurin distribution of Java, which is widely used
 
       - name: Setup Flutter Version Management CLI (FVM)
-      - uses: actions/checkout@v4
-      - uses: kuhnroyal/flutter-fvm-config-action/setup@v3
+        uses: actions/checkout@v4
 
       - name: Install Flutter SDK (Project Version)
         run: |
