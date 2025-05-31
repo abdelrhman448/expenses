@@ -19,16 +19,18 @@ jobs:
           java-version: '17'
           distribution: 'temurin' # Uses the Temurin distribution of Java, which is widely used
 
-
+      - name: Setup Flutter Version Management CLI (FVM)
+        uses: flutter-actions/setup-fvm@v1
 
       - name: Install Flutter SDK (Project Version)
         run: |
           # Read the Flutter version from .fvm/fvm_config.json
           FLUTTER_VERSION=$(cat .fvm/fvm_config.json | grep flutterSdkVersion | cut -d '"' -f 4)
           echo "Using Flutter version: $FLUTTER_VERSION"
+
           # Install the Flutter version specified in the project
-           install $FLUTTER_VERSION
-           use $FLUTTER_VERSION --force
+          fvm install $FLUTTER_VERSION
+          fvm use $FLUTTER_VERSION --force
       # Ensures that the project uses the correct Flutter SDK version specified in the configuration file
 
       - name: Print Flutter SDK version
