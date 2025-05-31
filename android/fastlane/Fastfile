@@ -1,0 +1,29 @@
+# Fastlane configuration for Android deployment
+
+default_platform(:android)
+
+platform :android do
+
+  desc "Build and distribute a new Beta build to Firebase App Distribution"
+  lane :firebase_distribution do
+
+    # This lane increments pubspec.yaml build version number
+    flutter_build_increment
+
+    # Cleans the Flutter project using Flutter Version Manager (FVM)
+    sh "fvm flutter clean"
+
+    # Builds the Flutter APK in release mode
+    sh "fvm flutter build apk --release"
+
+    # Uploads the generated APK to Firebase App Distribution
+    firebase_app_distribution(
+      app: "1:497216615487:android:2e2c89223ff2eecc71b48a",
+      firebase_cli_token: "1//03KVT0h0Kn3qiCgYIARAAGAMSNwF-L9IrhcAyxnxZsnwIvG3LnNgJqVRo7Rz5UhoTTHDUjQNt5WZ_nH7FjUCc4598mPjBVZRkTtU", # Authentication token for Firebase CLI
+      android_artifact_type: "APK", # Specifies that an APK is being uploaded
+      android_artifact_path: "../build/app/outputs/flutter-apk/app-release.apk", # Path to the release APK
+      testers: "", # List of testers who will receive the build
+      release_notes: "Deploy expenses task" # Notes for the testers about this release
+    )
+  end
+end
