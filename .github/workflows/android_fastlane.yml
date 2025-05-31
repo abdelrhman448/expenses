@@ -1,0 +1,49 @@
+name: Android Fastlane with Firebase App Distribution Workflow
+
+on:
+  push:
+    branches:
+      - main # Trigger deployment when pushing to the main branch
+
+jobs:
+  distribute_to_firebase:
+    runs-on: ubuntu-latest # Use the latest version of Ubuntu for the build environment
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+      # This step checks out the repository code so the workflow can access it
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'temurin' # Uses the Temurin distribution of Java, which is widely used
+
+      - name: Setup Flutter Version Management CLI (FVM)
+        uses: flutter-actions/setup-fvm@v1
+
+      - name: Install Flutter SDK (Project Version)
+        run: |
+          # Read the Flutter version from .fvm/fvm_config.json
+          FLUTTER_VERSION=$(cat .fvm/fvm_config.json | grep flutterSdkVersion | cut -d '"' -f 4)
+          echo "Using Flutter version: $FLUTTER_VERSION"
+          # Install the Flutter version specified in the project
+          fvm install $FLUTTER_VERSION
+          fvm use $FLUTTER_VERSION --force
+      # Ensures that the project uses the correct Flutter SDK version specified in the configuration file
+
+      - name: Print Flutter SDK version
+        run: fvm flutter --version
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3.4"
+          bundler-cache: true
+          working-directory: android
+
+      - name: Build and Distribute App
+        run: |
+          bundle exec fastlane android firebase_distribution
+        working-directory: android # Executes Fastlane within the Android project directory
+        # Runs the Fastlane command to build the Android app and distribute it via Firebase

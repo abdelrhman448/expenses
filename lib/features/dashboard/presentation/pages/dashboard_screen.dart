@@ -25,6 +25,7 @@ class DashboardScreen extends StatelessWidget {
          height: ScreenUtil().screenHeight,
          child: Stack(
            children: [
+
              Container(
                height:ResponsiveUtils.isSmallScreen(context)? 290.setHeight():320.setHeight(),
                width: ScreenUtil().screenWidth,
