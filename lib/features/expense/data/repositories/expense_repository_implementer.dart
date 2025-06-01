@@ -106,13 +106,9 @@ class ExpenseRepositoryImpl implements ExpenseRepository {
   }
 
   @override
-  Future<double> convertCurrency(double amount, String fromCurrency, String toCurrency) async {
+  Future<double> convertCurrency(double amount, String fromCurrency) async {
     try {
-      if (fromCurrency.toUpperCase() == toCurrency.toUpperCase()) {
-        return amount;
-      }
-
-      final response = await currencyApiService.getExchangeRate(fromCurrency, toCurrency);
+      final response = await currencyApiService.getExchangeRate(fromCurrency);
      double exchangeRate=0.0;
       response.fold(
           (l) => throw Exception("'Failed to convert currency"),

@@ -7,16 +7,12 @@ class AddExpenseUseCase {
   AddExpenseUseCase(this.repository);
 
   Future<int> call(AddExpenseParams params) async {
-    // Convert currency to USD if not already
+    // Convert currency to USD only if it's EGP
     double convertedAmount = params.amount;
-    if (params.currency.toUpperCase() != 'USD') {
-      print("dfdfegbrbgrbhrthgtght");
-      print(params.amount);
+    if (params.currency.toUpperCase() == 'EGP') {
       convertedAmount = await repository.convertCurrency(
         params.amount,
         params.currency,
-        'USD',
-
       );
     }
 
@@ -34,7 +30,6 @@ class AddExpenseUseCase {
     return await repository.createExpense(expense);
   }
 }
-
 class AddExpenseParams {
   final String category;
   final double amount;

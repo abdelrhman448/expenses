@@ -42,7 +42,6 @@ class ExpenseWidget extends StatelessWidget {
                   getIconAndColor(CategoriesEnum.values.firstWhere((element) => element.name==expenseEntity.category,)).title,
                     style: Theme.of(context).textTheme.font18With400(),
                   ),
-                  4.heightBox,
                   Text(
                     "Manually",
                     style: Theme.of(context).textTheme.font14With400().copyWith(color: NeutralColors.shade600),

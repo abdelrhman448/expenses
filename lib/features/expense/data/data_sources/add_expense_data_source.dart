@@ -6,7 +6,7 @@ import '../models/currency_model.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class CurrencyApiService{
-  Future<Either<ErrorModel, double>> getExchangeRate(String fromCurrency, String toCurrency);
+  Future<Either<ErrorModel, double>> getExchangeRate(String fromCurrency);
 }
 
 class CurrencyApiServiceImpl extends CurrencyApiService{
@@ -14,7 +14,7 @@ class CurrencyApiServiceImpl extends CurrencyApiService{
   CurrencyApiServiceImpl({required this.dioHelper});
 
   @override
-  Future<Either<ErrorModel, double>> getExchangeRate(String fromCurrency, String toCurrency)async {
+  Future<Either<ErrorModel, double>> getExchangeRate(String fromCurrency)async {
     DioHelper helper = DioHelper();
     try {
       final response = await helper.get("https://open.er-api.com/v6/latest/USD");

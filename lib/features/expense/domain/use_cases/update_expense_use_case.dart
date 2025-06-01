@@ -13,8 +13,8 @@ class UpdateExpenseUseCase {
     if (params.currency.toUpperCase() != 'USD') {
       convertedAmount = await repository.convertCurrency(
         params.amount,
-        'USD',
         params.currency,
+
       );
     }
 
