@@ -17,11 +17,11 @@ class MoneyCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Container(
-      height:ResponsiveUtils.isSmallScreen(context)? 190.setHeight():245.setHeight(),
+      height:ResponsiveUtils.isSmallScreen(context)? 190.h:245.h,
       width: ScreenUtil().screenWidth,
       decoration: BoxDecoration(
         color: PrimaryColors.light,
-        borderRadius: BorderRadius.circular(18.setHeight()),
+        borderRadius: BorderRadius.circular(18.h),
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: PaddingHelper.padding22Vertical(), horizontal: PaddingHelper.padding16Horizontal()),
@@ -42,7 +42,7 @@ class MoneyCardWidget extends StatelessWidget {
                   ],
                 ),
                 Spacer(),
-                Icon(Icons.more_horiz_rounded,color: NeutralColors.light,size: 30.setHeight(),)
+                Icon(Icons.more_horiz_rounded,color: NeutralColors.light,size: 30.h,)
               ],
             ),
             32.heightBox,

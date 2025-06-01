@@ -2,6 +2,7 @@ import 'package:expenses/core/apptheme_and_decoration/text_style_helper.dart';
 import 'package:expenses/core/extensions/sized_box_extension.dart';
 import 'package:expenses/core/size_config/app_size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/apptheme_and_decoration/color_helper.dart';
 import '../../../../widget/custom_image_network.dart';
 
@@ -17,9 +18,9 @@ class HeaderWelcomeWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CircleAvatar(
-            radius: 25.setHeight(),
+            radius: 25.h,
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(30.setHeight()),
+              borderRadius: BorderRadius.circular(30.h),
               child: NetworkImageComponent(
                 imageUrl: imageUrl,
                 fit: BoxFit.fill,

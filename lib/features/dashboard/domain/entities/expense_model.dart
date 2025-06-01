@@ -1,4 +1,5 @@
-import 'package:expenses/features/add_expense/presentation/widgets/category_widget.dart';
+
+import '../../../expense/presentation/widgets/category_widget.dart';
 
 class ExpensesModel{
   final CategoriesEnum categoriesEnum;

@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../../add_expense/presentation/widgets/category_widget.dart';
-import 'expense_model.dart';
 
 class ExpenseIconModel{
   final IconData icon;

@@ -23,7 +23,7 @@ class MainButton extends StatelessWidget {
     return  InkWell(
       onTap:enabled?onPress:null,
       child: Container(
-        height: 48.setHeight(),
+        height: 48.h,
         decoration: BoxDecoration(
           color: PrimaryColors.main,
           borderRadius: BorderRadius.circular(10.r)

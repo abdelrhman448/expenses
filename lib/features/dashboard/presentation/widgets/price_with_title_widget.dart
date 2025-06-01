@@ -21,8 +21,8 @@ class PriceWithTitleWidget extends StatelessWidget {
           children: [
             CircleAvatar(
               backgroundColor: PrimaryColors.lightShade,
-              radius: 14.setHeight(),
-              child: Icon(icon,size:18.setHeight(),color: NeutralColors.light,),
+              radius: 14.h,
+              child: Icon(icon,size:18.h,color: NeutralColors.light,),
             ),
             3.widthBox,
             Text(

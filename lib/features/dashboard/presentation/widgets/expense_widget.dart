@@ -4,17 +4,17 @@ import 'package:expenses/core/extensions/sized_box_extension.dart';
 import 'package:expenses/core/formats/price.dart';
 import 'package:expenses/core/utils/constants/padding.dart';
 import 'package:expenses/core/validation/date_time.dart';
-import 'package:expenses/features/add_expense/presentation/widgets/category_widget.dart' show CategoriesEnum, CategoryWidget;
 import 'package:expenses/features/dashboard/domain/entities/expense_icon_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../../../expense/domain/entities/expense_entity.dart';
+import '../../../expense/presentation/widgets/category_widget.dart';
 
-import '../../domain/entities/expense_model.dart';
 
 class ExpenseWidget extends StatelessWidget {
-  final ExpensesModel expensesModel;
+  final ExpenseEntity expenseEntity;
 
-  const ExpenseWidget({super.key,required this.expensesModel});
+  const ExpenseWidget({super.key,required this.expenseEntity});
 
   @override
   Widget build(BuildContext context) {
@@ -29,16 +29,17 @@ class ExpenseWidget extends StatelessWidget {
         child: Padding(
           padding:  EdgeInsets.symmetric(horizontal: PaddingHelper.padding16Horizontal(),vertical:PaddingHelper.padding8Vertical(context)),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CategoryWidget(
-                categoriesEnum: expensesModel.categoriesEnum,
+                categoriesEnum: CategoriesEnum.values.firstWhere((element) => element.name==expenseEntity.category,),
               ),
               15.widthBox,
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                  getIconAndColor(expensesModel.categoriesEnum).title,
+                  getIconAndColor(CategoriesEnum.values.firstWhere((element) => element.name==expenseEntity.category,)).title,
                     style: Theme.of(context).textTheme.font18With400(),
                   ),
                   4.heightBox,
@@ -55,12 +56,24 @@ class ExpenseWidget extends StatelessWidget {
                 ,
                 children: [
                   Text(
-                    "\$${priceViewFormat(expensesModel.expenseValue.toString())}",
+                    "-\$${priceViewFormat(expenseEntity.convertedAmount.toString())}",
                     style: Theme.of(context).textTheme.font20With700(),
                   ),
                   4.heightBox,
+                  Visibility(
+                    visible: expenseEntity.amount!=expenseEntity.convertedAmount,
+                    child: Column(
+                      children: [
+                        Text(
+                          "-EGP ${priceViewFormat(expenseEntity.amount.toString())}",
+                          style: Theme.of(context).textTheme.font14With400(),
+                        ),
+                        4.heightBox,
+                      ],
+                    ),
+                  ),
                   Text(
-                    getDayLabel(expensesModel.date),
+                    getDayLabel(expenseEntity.date),
                     style: Theme.of(context).textTheme.font14With400().copyWith(color: NeutralColors.shade600),
                   ),
 

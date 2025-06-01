@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import '../shared_pref/shared_pref_helper.dart';
 import '../utils/constants/api_constants.dart';
 import '../utils/constants/shared_preference_constants.dart';
 
@@ -20,7 +19,6 @@ class DioHelper {
       headers: {
         'Content-Type': 'application/json',
         "Accept": "application/json",
-        "Authorization":"Bearer ${SharedPreferencesHelper().getString(SharedPrefConstants().token)}",
       },
     );
 
@@ -34,7 +32,6 @@ class DioHelper {
           print("🚀 Sending request to: ${options.uri}");
           print(options.path);
           print("📌 Headers: ${options.headers}");
-          options.headers["Authorization"] = "Bearer ${SharedPreferencesHelper().getString(SharedPrefConstants().token).trim()}";
           return handler.next(options); // Continue with the request
         },
         onResponse: (response, handler) {
@@ -85,15 +82,6 @@ class DioHelper {
 
 }
 
-refreshToken()async{
-  DioHelper dio = DioHelper();
-  var response= await dio.post(refreshTokenUrl,data: {"refresh_token": "c6fpq4eUIRY7Ucnf80jattgfLjiGtqtgHCKm5Km2RBkDRrpZc4FjUqEM8bKE"});
-
-  if(response.statusCode == 200){
-    SharedPreferencesHelper().remove(SharedPrefConstants().token);
-    SharedPreferencesHelper().saveString(SharedPrefConstants().token, response.data['access_token']);
-  }
-}
 
 
 

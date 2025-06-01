@@ -9,7 +9,7 @@ extension SizeExtensionBox on num {
     height: ScreenUtil().setHeight(this),
   );
 
-  double setHeight()=>ScreenUtil().setHeight(this);
-  double setWidth()=>ScreenUtil().setWidth(this);
+
+
 
 }

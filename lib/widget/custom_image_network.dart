@@ -1,11 +1,8 @@
-import 'package:expenses/core/extensions/sized_box_extension.dart';
-import 'package:expenses/core/size_config/app_size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import 'package:path/path.dart' as path;
-
 import 'custom_widget/loading_animation_widget.dart';
 
 class NetworkImageComponent extends StatelessWidget {
@@ -69,7 +66,7 @@ class NetworkImageComponent extends StatelessWidget {
         child: Icon(
           Icons.image,
           color: Colors.white,
-          size: 30.setHeight(),
+          size: 30.h,
         ),
       ),
     );
@@ -78,7 +75,7 @@ class NetworkImageComponent extends StatelessWidget {
     
     return  Center(
       child:AdaptiveLoadingAnimationWidget(
-        size: 2.setHeight(),
+        size: 2.h,
       ),
     );;
   }

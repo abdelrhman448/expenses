@@ -1,9 +1,5 @@
-
-import 'package:expenses/core/extensions/sized_box_extension.dart';
-import 'package:expenses/core/size_config/app_size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'color_helper.dart';
 
 
@@ -13,15 +9,15 @@ class AppDecorations {
     return  BoxDecoration(
         color: PrimaryColors.main,
         borderRadius: BorderRadiusDirectional.only(
-          bottomEnd:Radius.circular(5.setHeight()),
-          bottomStart:Radius.circular(5.setHeight()),
+          bottomEnd:Radius.circular(5.h),
+          bottomStart:Radius.circular(5.h),
         )
     );
   }
   static BoxDecoration dashboardFilterContainer({required BuildContext context}){
     return   BoxDecoration(
       color: NeutralColors.light,
-      borderRadius: BorderRadius.circular(10.setHeight()),
+      borderRadius: BorderRadius.circular(10.h),
     );
   }
   static BoxDecoration mainButtonDecoration(){

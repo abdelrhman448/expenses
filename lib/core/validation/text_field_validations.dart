@@ -7,11 +7,11 @@ class ValidationHelper {
   /// Returns null if valid, or an error message if invalid
   static String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
-      return 'fieldEmpty'.tr;
+      return 'fieldEmpty';
     }
     final bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value);
     if (!emailValid) {
-    return 'pleaseEnterAValidEmailAddress'.tr;
+    return 'pleaseEnterAValidEmailAddress';
     }
 
     return null;
@@ -21,7 +21,7 @@ class ValidationHelper {
   /// Returns null if valid, or an error message if invalid
   static String? validateEgyptianPhone(String? value) {
     if (value == null || value.isEmpty) {
-      return 'fieldEmpty'.tr;
+      return 'fieldEmpty';
     }
 
     // Remove any spaces, dashes, or parentheses
@@ -36,7 +36,7 @@ class ValidationHelper {
     final egyptianMobileRegex = RegExp(r'^((\+?20)|0)?1[0125][0-9]{8}$');
 
     if (!egyptianMobileRegex.hasMatch(cleaned)) {
-      return 'incorrectPhoneNumber'.tr;
+      return 'incorrectPhoneNumber';
     }
 
     return null;
@@ -53,28 +53,28 @@ class ValidationHelper {
         bool requireSpecialChars = true,
       }) {
     if (value == null || value.isEmpty) {
-      return 'fieldEmpty'.tr;
+      return 'fieldEmpty';
     }
 
     if (value.length < minLength) {
-      return 'incorrectPassword'.tr;
+      return 'incorrectPassword';
     }
 
     if (requireUppercase && !value.contains(RegExp(r'[A-Z]'))) {
-      return 'incorrectPassword'.tr;
+      return 'incorrectPassword';
     }
 
     if (requireLowercase && !value.contains(RegExp(r'[a-z]'))) {
-      return 'incorrectPassword'.tr;
+      return 'incorrectPassword';
     }
 
     if (requireNumbers && !value.contains(RegExp(r'[0-9]'))) {
-      return 'incorrectPassword'.tr;
+      return 'incorrectPassword';
     }
 
     if (requireSpecialChars &&
         !value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-      return 'incorrectPassword'.tr;
+      return 'incorrectPassword';
     }
 
     return null;
@@ -85,11 +85,11 @@ class ValidationHelper {
       String? originalPassword,
       ) {
     if (confirmPassword == null || confirmPassword.isEmpty) {
-      return 'fieldEmpty'.tr;
+      return 'fieldEmpty';
     }
 
     if (confirmPassword != originalPassword) {
-      return 'passwordsDoNotMatch'.tr; // تأكد إن دي موجودة في ملف الترجمة
+      return 'passwordsDoNotMatch'; // تأكد إن دي موجودة في ملف الترجمة
     }
 
     return null;
@@ -231,39 +231,39 @@ class ValidationHelper {
   static String? validateUsername(String? value) {
     // Check if empty
     if (value == null || value.isEmpty) {
-      return 'fieldEmpty'.tr;
+      return 'fieldEmpty';
     }
 
     // Check length
     if (value.length < 3) {
-      return 'incorrectUsername'.tr;
+      return 'incorrectUsername';
     }
 
     if (value.length > 20) {
-      return 'incorrectUsername'.tr;
+      return 'incorrectUsername';
     }
 
     // Check for valid characters (alphanumeric and some special characters)
     final RegExp validCharsRegex = RegExp(r'^[a-zA-Z0-9._-]+$');
     if (!validCharsRegex.hasMatch(value)) {
-      return 'incorrectUsername'.tr;
+      return 'incorrectUsername';
     }
 
     // Check that username doesn't start with special characters
     if (value.startsWith('.') || value.startsWith('_') || value.startsWith('-')) {
-      return 'incorrectUsername'.tr;
+      return 'incorrectUsername';
     }
 
     // Check that username doesn't end with special characters
     if (value.endsWith('.') || value.endsWith('_') || value.endsWith('-')) {
-      return 'incorrectUsername'.tr;
+      return 'incorrectUsername';
     }
 
     // Check for consecutive special characters
     if (value.contains('..') || value.contains('__') || value.contains('--') ||
         value.contains('._') || value.contains('_.') || value.contains('.-') ||
         value.contains('-.') || value.contains('_-') || value.contains('-_')) {
-      return 'incorrectUsername'.tr;
+      return 'incorrectUsername';
     }
 
     return null; // Return null when validation passes

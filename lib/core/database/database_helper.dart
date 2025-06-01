@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import '../../features/add_expense/data/models/expense_model.dart';
+import '../../features/expense/data/models/expense_model.dart';
 
 class DatabaseHelper {
   static DatabaseHelper? _instance;
@@ -53,23 +53,52 @@ class DatabaseHelper {
   }
 
   Future<List<ExpenseModel>> getAllExpenses({
-    int? limit,
+    int? limit = 10,
+    int page = 1,
     String? category,
+    String? filter, // 'week', 'month', or null
   }) async {
     final db = await database;
     String whereClause = '';
     List<dynamic> whereArgs = [];
+
+    // Category filter
     if (category != null) {
       whereClause += 'category = ?';
       whereArgs.add(category);
     }
+
+    // Date filters
+    if (filter == 'week') {
+      if (whereClause.isNotEmpty) whereClause += ' AND ';
+      DateTime weekAgo = DateTime.now().subtract(Duration(days: 7));
+      String weekAgoStr = weekAgo.toIso8601String().split(
+          'T')[0]; // Gets YYYY-MM-DD
+      whereClause += 'date >= ?';
+      whereArgs.add(weekAgoStr);
+    }
+
+    if (filter == 'month') {
+      if (whereClause.isNotEmpty) whereClause += ' AND ';
+      DateTime now = DateTime.now();
+      String currentMonth = '${now.year}-${now.month.toString().padLeft(
+          2, '0')}';
+      whereClause += 'date LIKE ?';
+      whereArgs.add('$currentMonth%');
+    }
+
+    // Calculate offset for pagination
+    int offset = (page - 1) * (limit ?? 10);
+
     final List<Map<String, dynamic>> maps = await db.query(
       'expenses',
       where: whereClause.isEmpty ? null : whereClause,
       whereArgs: whereArgs.isEmpty ? null : whereArgs,
       orderBy: 'created_at DESC',
       limit: limit,
+      offset: offset,
     );
+
     return List.generate(maps.length, (i) => ExpenseModel.fromMap(maps[i]));
   }
 
@@ -119,7 +148,9 @@ class DatabaseHelper {
     }
 
     final result = await db.rawQuery(
-      'SELECT SUM(converted_amount) as total FROM expenses${whereClause.isEmpty ? '' : ' WHERE $whereClause'}',
+      'SELECT SUM(converted_amount) as total FROM expenses${whereClause.isEmpty
+          ? ''
+          : ' WHERE $whereClause'}',
       whereArgs.isEmpty ? null : whereArgs,
     );
 
@@ -128,15 +159,33 @@ class DatabaseHelper {
 
   Future<int> getExpensesCount({
     String? category,
+    String? filter, // 'week', 'month', or null
   }) async {
     final db = await database;
-
     String whereClause = '';
     List<dynamic> whereArgs = [];
 
+    // Category filter
     if (category != null) {
       whereClause += 'category = ?';
       whereArgs.add(category);
+    }
+
+    // Date filters (same logic as getAllExpenses)
+    if (filter == 'week') {
+      if (whereClause.isNotEmpty) whereClause += ' AND ';
+      DateTime weekAgo = DateTime.now().subtract(Duration(days: 7));
+      String weekAgoStr = weekAgo.toIso8601String().split('T')[0];
+      whereClause += 'date >= ?';
+      whereArgs.add(weekAgoStr);
+    }
+
+    if (filter == 'month') {
+      if (whereClause.isNotEmpty) whereClause += ' AND ';
+      DateTime now = DateTime.now();
+      String currentMonth = '${now.year}-${now.month.toString().padLeft(2, '0')}';
+      whereClause += 'date LIKE ?';
+      whereArgs.add('$currentMonth%');
     }
 
     final result = await db.rawQuery(
@@ -146,6 +195,7 @@ class DatabaseHelper {
 
     return Sqflite.firstIntValue(result) ?? 0;
   }
+
 
   Future<void> clearDatabase() async {
     final db = await database;
