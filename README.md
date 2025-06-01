@@ -8,6 +8,7 @@ A lightweight Flutter expense tracking mobile app with offline support, currency
 
 This app follows a **Clean Architecture + MVVM** structure:
 
+
 State management is handled using **Cubit (Bloc)**.
 
 ---
